@@ -12,6 +12,8 @@ Not sure how many pages we will need. Currently for the overall functionally I a
 
 * Answer/respond to a post/question. Which could allow for continuing threads/conversations.
 
+* Search/filter functionally. Which could be done via tags/topic or word matching in the title.
+
 * Perhaps a form of direct messages.
 
 * Following a topic/question to get updates on the topic.
