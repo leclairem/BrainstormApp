@@ -1,9 +1,38 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
+<ion-header [translucent]="true">
+  <ion-toolbar color="Primary">
+    <div class="ion-text-center"><h2>BrainStorm</h2><h3>Register</h3></div>
+<img slot="end" src="/assets/2.png">
+<ion-back-button slot="start" defaultHref="login"></ion-back-button>
+</ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="registerForm" (submit)="createNewUser(registerForm.value)">
+    <ion-item>
+      <ion-label color="primary" position="floating">First Name</ion-label>
+      <ion-input type="text" formControlName="fname" required></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label color="primary" position="floating">Last Name</ion-label>
+      <ion-input type="text" formControlName="lname" required></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label color="primary" position="floating">Handle</ion-label>
+      <ion-input type="text" formControlName="handle" required></ion-input>
+    </ion-item>
 
+    <ion-item>
+        <ion-label color="primary" position="floating">Email</ion-label>
+        <ion-input type="text" placeholder="username@email.sc.edu" formControlName="email" required></ion-input>
+    </ion-item>
+  
+    <ion-item>
+        <ion-label color="primary" position="floating">Password</ion-label>
+        <ion-input type="password" formControlName="password" required></ion-input>
+    </ion-item>
+  
+    <ion-button id="signup-button" class="submit-btn" expand="block" type="submit" [disabled]="!registerForm.valid">Sign Up</ion-button>
+    </form>
 </ion-content>

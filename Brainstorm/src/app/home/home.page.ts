@@ -1,4 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { Router,Routes, RouterModule } from '@angular/router';
+
+import { IonicModule } from '@ionic/angular';
+import { ItemService } from '../item.service';
 
 @Component({
   selector: 'app-home',
@@ -7,11 +16,11 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  
-
   threads=[];
 
-  constructor() {
+  constructor(
+      public router: Router
+  ) {
     this.threads.push(new thread('Cool Idea',233,'Darth Vader'));
     this.threads.push(new thread('Not so cool idea', 3, 'Grand Moff Tarkin'));
     this.threads.push(new thread('Billion Dollar Idea', 18492, 'Darth Sidious'));

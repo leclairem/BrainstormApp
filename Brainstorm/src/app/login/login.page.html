@@ -1,9 +1,24 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
+<ion-header [translucent]="true">
+  <ion-toolbar color="Primary">
+    <div class="ion-text-center"><h2>BrainStorm</h2><h3>Login</h3></div>
+<img slot="end" src="/assets/2.png">
+</ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="login_user" (submit)="login(login_user.value)">
 
+    <ion-item>
+        <ion-label color="primary" position="floating">Email</ion-label>
+        <ion-input type="text" formControlName="email" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label color="primary" position="floating">Password</ion-label>
+        <ion-input type="password" formControlName="password" required></ion-input>
+    </ion-item>
+
+    <ion-button class="submit-btn" expand="block" type="submit" [disabled]="!login_user.valid">Login</ion-button>
+    </form>
+  <ion-button (click)="register()" expand="block">Register</ion-button>
 </ion-content>
