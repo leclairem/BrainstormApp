@@ -12,6 +12,26 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
+  {
+    path: 'thread',
+    loadChildren: () => import('./thread/thread.module').then( m => m.ThreadPageModule)
+  },
+  {
+    path: 'user-settings',
+    loadChildren: () => import('./user-settings/user-settings.module').then( m => m.UserSettingsPageModule)
+  },
+  {
+    path: 'update-email',
+    loadChildren: () => import('./update-email/update-email.module').then( m => m.UpdateEmailPageModule)
+  },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
+  {
+    path: 'update-info',
+    loadChildren: () => import('./update-info/update-info.module').then( m => m.UpdateInfoPageModule)
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="Primary">
+    <div class="ion-text-center"><h2>BrainStorm</h2><h3>{{title}}</h3></div>
+<ion-menu-button slot="start">
+    <ion-button slot="end"></ion-button>
+</ion-menu-button>
+<img slot="end" src="/assets/2.png">
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-card>
+  <h3>{{body}}</h3>
+  <br>
+  <ion-note>{{owner}}</ion-note>
+</ion-card>
+<ion-card>
+  <ion-item *ngFor='let reply of replies'>
+    <!-- <ion-text>
+      <p>{{reply.reply}}</p>
+      <p>{{reply.replier}}</p>
+    </ion-text> -->
+    <ion-label class='stacked'>
+      <h2>{{reply.reply}}</h2>
+      <ion-note>{{reply.replier}}</ion-note>
+    </ion-label>
+    <!-- <ion-label>{{reply.replier}}</ion-label> -->
+  </ion-item>
+</ion-card>
+</ion-content>

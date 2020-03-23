@@ -21,10 +21,15 @@ export class HomePage {
   constructor(
       public router: Router
   ) {
-    this.threads.push(new thread('Cool Idea',233,'Darth Vader'));
-    this.threads.push(new thread('Not so cool idea', 3, 'Grand Moff Tarkin'));
-    this.threads.push(new thread('Billion Dollar Idea', 18492, 'Darth Sidious'));
-    this.threads.push(new thread('Crawl under a rock and hide from this idea',1,'Lando Calrissian'));
+    this.threads.push(new thread('Cool Idea',233,'Darth Vader','Be careful not to choke on your aspirations.'));
+    this.threads.push(new thread('Not so cool idea', 3, 'Grand Moff Tarkin','Lets build a battlestation the size of a small moon with a major design flaw'));
+    this.threads.push(new thread('Billion Dollar Idea', 18492, 'Darth Sidious','Lets tear down the republic and build a grand empire'));
+    this.threads.push(new thread('Crawl under a rock and hide from this idea',1,'Lando Calrissian','I\'m goint to betray an old friend and stab him in the back'));
+  }
+
+  goToThread(thread){
+  	console.log(thread);
+  	this.router.navigate(["/thread", thread]);
   }
 
 }
@@ -33,10 +38,12 @@ class thread {
   title:any;
   views:any;
   owner:any;
+  body:any;
 
-  constructor(t:string, v:number, o:string){
+  constructor(t:string, v:number, o:string, b:string){
     this.title = t;
     this.views = v;
     this.owner = o;
+    this.body = b;
   }
 };

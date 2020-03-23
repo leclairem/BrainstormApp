@@ -14,7 +14,7 @@
       <ion-title size="large">Memory Bank</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-item *ngFor="let thread of threads">
+  <ion-item *ngFor="let thread of threads" (click)='goToThread(thread)'>
     <ion-label class="ion-text-wrap">{{thread.title}} <p>{{thread.owner}}</p></ion-label>
     <ion-note >views {{thread.views}}</ion-note>
   </ion-item>
