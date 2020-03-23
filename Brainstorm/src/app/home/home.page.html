@@ -1,20 +1,21 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
+  <ion-toolbar color="Primary">
+    <div class="ion-text-center"><h2>BrainStorm</h2><h3>Home</h3></div>
+<ion-menu-button slot="start">
+    <ion-button slot="end"></ion-button>
+</ion-menu-button>
+<img slot="end" src="/assets/2.png">
+</ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Memory Bank</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-item *ngFor="let thread of threads">
+    <ion-label class="ion-text-wrap">{{thread.title}} <p>{{thread.owner}}</p></ion-label>
+    <ion-note >views {{thread.views}}</ion-note>
+  </ion-item>
 </ion-content>
