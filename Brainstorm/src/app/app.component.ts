@@ -1,8 +1,19 @@
 import { Component } from '@angular/core';
-
+import * as firebase from 'firebase';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+
+var firebaseConfig = {
+  apiKey: "AIzaSyCwvLy9CUlqy20Fpvz6eXTiA-Ovko6dzeE",
+  authDomain: "brainstorm-546.firebaseapp.com",
+  databaseURL: "https://brainstorm-546.firebaseio.com",
+  projectId: "brainstorm-546",
+  storageBucket: "brainstorm-546.appspot.com",
+  messagingSenderId: "526678353309",
+  appId: "1:526678353309:web:211ec83e3c3d6348b3fb74",
+  measurementId: "G-K78Y3BFLG1"
+};
 
 @Component({
   selector: 'app-root',
@@ -28,8 +39,8 @@ export class AppComponent {
     },
     {
       title: 'Logout',
-      url: '/login',
-      icon: 'log-out'
+      url: '/logout',
+      icon: 'log-out',
     }
   ];
   constructor(
@@ -44,6 +55,8 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
     });
   }
 }

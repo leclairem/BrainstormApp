@@ -32,6 +32,14 @@ const routes: Routes = [
     path: 'update-info',
     loadChildren: () => import('./update-info/update-info.module').then( m => m.UpdateInfoPageModule)
   },
+  {
+    path: 'category',
+    loadChildren: () => import('./category/category.module').then( m => m.CategoryPageModule)
+  },
+  {
+    path: 'logout',
+    loadChildren: () => import('./logout/logout.module').then( m => m.LogoutPageModule)
+  },
 ];
 
 @NgModule({

@@ -1,5 +1,7 @@
 {
   "name": "Brainstorm",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

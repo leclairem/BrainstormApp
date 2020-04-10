@@ -5,8 +5,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { Router,Routes, RouterModule } from '@angular/router';
-
-import { IonicModule } from '@ionic/angular';
+import * as firebase from 'firebase';
+import { IonicModule, AlertController } from '@ionic/angular';
 import { ItemService } from '../item.service';
 
 @Component({
@@ -21,6 +21,8 @@ export class LoginPage implements OnInit {
   constructor(
     public router: Router,
     public formBuilder: FormBuilder,
+    public itemService: ItemService,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -30,8 +32,29 @@ export class LoginPage implements OnInit {
     });
   }
 
-  login(){
-    this.router.navigate(["/home"]);
+  async login(value){
+    var self = this;
+    firebase.auth().signInWithEmailAndPassword(value.email, value.password)
+    .then(() => {
+      self.itemService.uid = firebase.auth().currentUser.uid;
+      // self.itemService.events.publish('user:loggedIN',Date.now());
+      console.log('user logged in as '+self.itemService.uid);
+      self.router.navigate(['/home']);
+    }).catch(function(error) {
+      console.log(error.code+' '+error.message);
+      if(error.code == 'auth/wrong-password')
+        self.presentAlert('Login failed', 'The password is invalid or the user does not have a password.  If you have used goole signin, sign in using google.')
+    });
+  }
+
+  async presentAlert(header, errorMessage) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: errorMessage,
+      buttons: ['OK']
+
+    });
+    await alert.present();
   }
 
   register(){

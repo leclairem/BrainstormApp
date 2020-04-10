@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="registerForm" (submit)="createNewUser(registerForm.value)">
+  <form [formGroup]="registerForm" (submit)="register(registerForm.value)">
     <ion-item>
       <ion-label color="primary" position="floating">First Name</ion-label>
       <ion-input type="text" formControlName="fname" required></ion-input>
@@ -33,6 +33,6 @@
         <ion-input type="password" formControlName="password" required></ion-input>
     </ion-item>
   
-    <ion-button id="signup-button" class="submit-btn" expand="block" type="submit" [disabled]="!registerForm.valid">Sign Up</ion-button>
+    <ion-button id="signup-button" class="submit-btn" expand="block" type="submit" [disabled]="!registerForm.valid">Register</ion-button>
     </form>
 </ion-content>
