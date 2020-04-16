@@ -39,7 +39,15 @@ const routes: Routes = [
   {
     path: 'logout',
     loadChildren: () => import('./logout/logout.module').then( m => m.LogoutPageModule)
+  },  {
+    path: 'conversations',
+    loadChildren: () => import('./conversations/conversations.module').then( m => m.ConversationsPageModule)
   },
+  {
+    path: 'messages',
+    loadChildren: () => import('./messages/messages.module').then( m => m.MessagesPageModule)
+  },
+
 ];
 
 @NgModule({
