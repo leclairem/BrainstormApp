@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
     firebase.auth().signInWithEmailAndPassword(value.email, value.password)
     .then((user) => {
       self.itemService.uid = firebase.auth().currentUser.uid;
-      self.itemService.getUserData(user);
+      self.itemService.getUserData();
       // self.itemService.events.publish('user:loggedIN',Date.now());
       console.log('user logged in as '+self.itemService.uid);
       self.router.navigate(['/home']);

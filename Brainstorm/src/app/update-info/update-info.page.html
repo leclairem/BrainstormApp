@@ -1,9 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>update-info</ion-title>
+  <ion-toolbar color="Primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="user-settings"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Update Info</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="updateInfo" (submit)="update(updateInfo.value)">
 
+    <ion-item>
+        <ion-label color="primary" position="floating">First Name</ion-label>
+        <ion-input type="text" formControlName="firstName" required value={{firstName}}></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label color="primary" position="floating">Last Name</ion-label>
+        <ion-input type="text" formControlName="lastName" required value={{lastName}}></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" position="floating">Last Name</ion-label>
+      <ion-input type="text" formControlName="handle" required value={{handle}}></ion-input>
+  </ion-item>
+
+    <ion-button class="submit-btn" expand="block" type="submit" [disabled]="!updateInfo.valid">Update Info</ion-button>
+    </form>
 </ion-content>

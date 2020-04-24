@@ -58,11 +58,12 @@ export class RegisterPage implements OnInit {
           email: value.email,
           uid: user.uid
         })
-        .then(function(docRef) {
+        .then(async function(docRef) {
           console.log("Doc written with Id: ", docRef.id);
-          db.collection("users").doc(docRef.id).update({
+          await db.collection("users").doc(docRef.id).update({
             "docID": docRef.id
           });
+          self.itemService.getUserData();
           self.router.navigate(["/home"]);
         })
         .catch(function(error) {

@@ -29,7 +29,7 @@ export class ItemService {
 
   constructor() { }
 
-  getUserData(value){
+  getUserData(){
     var self = this;
     var db = firebase.firestore().collection('users');
     db.where('uid','==',`${self.uid}`).get().then(snapshot => {
