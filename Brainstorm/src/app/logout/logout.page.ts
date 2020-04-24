@@ -16,10 +16,14 @@ export class LogoutPage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
+    // console.log('will enter');
     this.logout();
     this.router.navigate(['/login']);
-    console.log('ngOnInit');
   }
+  
   async logout(){
     await firebase.auth().signOut();
     this.itemService.uid = '';
