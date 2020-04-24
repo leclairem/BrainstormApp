@@ -35,15 +35,17 @@ export class LoginPage implements OnInit {
   async login(value){
     var self = this;
     firebase.auth().signInWithEmailAndPassword(value.email, value.password)
-    .then(() => {
+    .then((user) => {
       self.itemService.uid = firebase.auth().currentUser.uid;
+      self.itemService.getUserData(user);
       // self.itemService.events.publish('user:loggedIN',Date.now());
       console.log('user logged in as '+self.itemService.uid);
       self.router.navigate(['/home']);
     }).catch(function(error) {
       console.log(error.code+' '+error.message);
-      if(error.code == 'auth/wrong-password')
-        self.presentAlert('Login failed', 'The password is invalid or the user does not have a password.  If you have used goole signin, sign in using google.')
+      self.presentAlert(error.code,error.message);
+      // if(error.code == 'auth/wrong-password')
+      //   self.presentAlert('Login failed', 'The password is invalid or the user does not have a password.  If you have used goole signin, sign in using google.')
     });
   }
 

@@ -11,9 +11,11 @@ import { Subject } from 'rxjs'
 export class ItemService {
 
   currentUser: any;
+  token: any;
   handle: any;
   db = firebase.firestore();
   uid: any;
+  userDocID: any;
 
   private itemSubject = new Subject<any>();
 
@@ -27,4 +29,13 @@ export class ItemService {
 
   constructor() { }
 
+  getUserData(value){
+    var self = this;
+    var db = firebase.firestore().collection('users');
+    db.where('uid','==',`${self.uid}`).get().then(snapshot => {
+      snapshot.forEach(doc => {
+        self.currentUser = doc.data();
+      });
+    });
+  }
 }

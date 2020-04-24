@@ -47,6 +47,8 @@ export class RegisterPage implements OnInit {
     self.presentAlert(errorCode, errorMessage);
     }).then(function(result){
       var user = firebase.auth().currentUser;
+      self.itemService.token = user;
+      self.itemService.uid = user.uid;
       console.log("adding user to db");
       var db = firebase.firestore();
         db.collection("users").add({
@@ -61,12 +63,11 @@ export class RegisterPage implements OnInit {
           db.collection("users").doc(docRef.id).update({
             "docID": docRef.id
           });
-          // self.router.navigate(["/home"]);
+          self.router.navigate(["/home"]);
         })
         .catch(function(error) {
           console.error("error adding doc: ", error);
         })
-        // this.productService.currentUser = user;
       });
     }
     async presentAlert(header, errorMessage) {
