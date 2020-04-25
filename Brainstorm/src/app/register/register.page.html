@@ -32,6 +32,11 @@
         <ion-label color="primary" position="floating">Password</ion-label>
         <ion-input type="password" formControlName="password" required></ion-input>
     </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" position="floating">Confirm Password</ion-label>
+      <ion-input type="password" formControlName="confirmPassword" required></ion-input>
+  </ion-item>
   
     <ion-button id="signup-button" class="submit-btn" expand="block" type="submit" [disabled]="!registerForm.valid">Register</ion-button>
     </form>

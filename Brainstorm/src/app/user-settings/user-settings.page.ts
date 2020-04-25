@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemService } from '../item.service'
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-user-settings',
@@ -9,37 +10,35 @@ import { Router } from '@angular/router';
 })
 export class UserSettingsPage implements OnInit {
 
-    email: '';
+  email: '';
   firstName: '';
   lastName: '';
   handle: '';
   constructor(
     private itemService: ItemService,
     private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
-  async ionViewWillEnter(){
-    this.email = this.itemService.currentUser.email;
-    this.firstName = this.itemService.currentUser.firstName;
-    this.lastName = this.itemService.currentUser.lastName;
-    this.handle = this.itemService.currentUser.handle;
-  }
-  ionViewDidEnter(){
-    this.email = this.itemService.currentUser.email;
-    this.firstName = this.itemService.currentUser.firstName;
-    this.lastName = this.itemService.currentUser.lastName;
-    this.handle = this.itemService.currentUser.handle;
+  ionViewWillEnter(){
+    firebase.firestore().collection('users').doc(this.itemService.currentUser.docID)
+    .get().then(doc => {
+      this.email = doc.data().email;
+      this.firstName = doc.data().firstName;
+      this.lastName = doc.data().lastName;
+      this.handle = doc.data().handle;
+    });
   }
 
   ngOnInit() {
   }
 
   goToUpdateEmail(){
-
+    this.router.navigate(['/update-email']);
   }
 
   goToChangePassword(){
-
+    this.router.navigate(['/change-password']);
   }
 
   goToUpdateInfo(){

@@ -51,8 +51,7 @@ export class UpdateInfoPage implements OnInit {
       console.log('User updated successfully');
       await self.itemService.getUserData();
       self.router.navigate(['/user-settings']);
-    })
-    .catch(function (error) {
+    }).catch(function (error) {
       self.presentAlert(error.errorCode, error.errorMessage);
     });
   }
@@ -62,7 +61,6 @@ export class UpdateInfoPage implements OnInit {
       header: header,
       message: message,
       buttons: ['OK']
-
     });
     await alert.present();
   }
