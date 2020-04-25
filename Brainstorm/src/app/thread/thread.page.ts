@@ -8,7 +8,11 @@ import { Router,Routes, RouterModule, ActivatedRoute } from '@angular/router';
 
 import { IonicModule, AlertController } from '@ionic/angular';
 import { ItemService } from '../item.service';
+<<<<<<< HEAD
 import * as firebase from 'firebase';
+=======
+import * as firebase from'firebase';
+>>>>>>> 9440ca891f595fdc1b7d3883bb08687f6e1a0d10
 
 @Component({
   selector: 'app-thread',
@@ -22,6 +26,14 @@ export class ThreadPage implements OnInit {
   likes:number;
   dislikes:number;
   thread:any;
+<<<<<<< HEAD
+=======
+  title:any;
+  views:any;
+  owner:any;
+  body:any;
+  db = firebase.firestore();
+>>>>>>> 9440ca891f595fdc1b7d3883bb08687f6e1a0d10
 
   constructor(
     private route: ActivatedRoute,

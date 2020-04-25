@@ -27,24 +27,11 @@ export class AppComponent {
       url: '/home',
       icon: 'home'
     },
-<<<<<<< HEAD
     {
       title: 'My Ideas',
       url: '/my-ideas',
       icon: 'list'
     },
-=======
-	{
-		title: 'Messages',
-		url: '/conversations',
-		icon: 'chatbox-outline'
-	},
-    // {
-    //   title: 'List',
-    //   url: '/list',
-    //   icon: 'list'
-    // }
->>>>>>> 3702e422a7f1da17ca0e21846a9ea24862664f3b
     {
       title: 'User Settings',
       url: '/user-settings',
