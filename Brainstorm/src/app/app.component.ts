@@ -27,11 +27,11 @@ export class AppComponent {
       url: '/home',
       icon: 'home'
     },
-    // {
-    //   title: 'List',
-    //   url: '/list',
-    //   icon: 'list'
-    // }
+    {
+      title: 'My Ideas',
+      url: '/my-ideas',
+      icon: 'list'
+    },
     {
       title: 'User Settings',
       url: '/user-settings',

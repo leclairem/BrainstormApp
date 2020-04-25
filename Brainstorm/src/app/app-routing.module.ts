@@ -51,6 +51,14 @@ const routes: Routes = [
     path: 'reset-password',
     loadChildren: () => import('./reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   },
+  {
+    path: 'my-ideas',
+    loadChildren: () => import('./my-ideas/my-ideas.module').then( m => m.MyIdeasPageModule)
+  },
+  {
+    path: 'create-thread',
+    loadChildren: () => import('./create-thread/create-thread.module').then( m => m.CreateThreadPageModule)
+  },
 
 ];
 

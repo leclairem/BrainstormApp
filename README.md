@@ -21,3 +21,12 @@ Not sure how many pages we will need. Currently for the overall functionally I a
 * Possibly following a user and seeing what they do and get updates about their activity.
 
 * Allowing for images to be uploaded?
+
+## Dependencies:  
+### camera  
+* ionic cordova plugin add cordova-plugin-camera  
+* npm install @ionic-native/camera  
+### File system  
+* ionic cordova plugin add cordova-plugin-file  
+* npm install @ionic-native/file  
+

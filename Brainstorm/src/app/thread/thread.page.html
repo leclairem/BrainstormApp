@@ -1,30 +1,42 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="Primary">
-    <div class="ion-text-center"><h2>BrainStorm</h2><h3>{{title}}</h3></div>
-<ion-menu-button slot="start">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <div class="ion-text-center"><h2>BrainStorm</h2><h3>{{thread.title}}</h3></div>
+<!-- <ion-menu-button slot="start">
     <ion-button slot="end"></ion-button>
-</ion-menu-button>
+</ion-menu-button> -->
 <img slot="end" src="/assets/2.png">
 </ion-toolbar>
 </ion-header>
 
 <ion-content>
 <ion-card>
-  <h3>{{body}}</h3>
+  <h3>{{thread.description}}</h3>
   <br>
-  <ion-note>{{owner}}</ion-note>
+  <!-- <ion-note>{{thread.owner}}</ion-note> -->
+  <h4>{{thread.owner}}</h4>
+  <div>
+  <!-- <ion-note><a (click)="like()">Like</a>{{ likes }}</ion-note>
+  <ion-note><a (click)="dislike()"> Dislike</a>{{ dislikes }}</ion-note> -->
+  <h5><a (click)="like()">Like</a>{{ likes }}
+  <a (click)="dislike()"> Dislike</a>{{ dislikes }}</h5>
+</div>
 </ion-card>
-<ion-card>
-  <ion-item *ngFor='let reply of replies'>
-    <!-- <ion-text>
-      <p>{{reply.reply}}</p>
-      <p>{{reply.replier}}</p>
-    </ion-text> -->
+<ion-card *ngFor='let reply of replies'>
+  <ion-item>
     <ion-label class='stacked'>
-      <h2>{{reply.reply}}</h2>
-      <ion-note>{{reply.replier}}</ion-note>
+      <h2>{{reply.body}}</h2>
+      <ion-note>{{reply.owner}}</ion-note>
     </ion-label>
-    <!-- <ion-label>{{reply.replier}}</ion-label> -->
   </ion-item>
 </ion-card>
+<ion-item [hidden]="hideComment()">
+  <form [formGroup]="replyForm" (submit)="postReply(replyForm.value)">
+    <ion-label color="primary" position="floating">Your Thoughts</ion-label>
+    <ion-textarea formControlName="body"></ion-textarea>
+    <ion-button class="submit-btn" expand="block" type="submit" [disabled]="!replyForm.valid">Post</ion-button>
+  </form>
+</ion-item>
 </ion-content>

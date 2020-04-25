@@ -8,6 +8,7 @@ import { Router,Routes, RouterModule, ActivatedRoute } from '@angular/router';
 
 import { IonicModule, AlertController } from '@ionic/angular';
 import { ItemService } from '../item.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-thread',
@@ -15,49 +16,111 @@ import { ItemService } from '../item.service';
   styleUrls: ['./thread.page.scss'],
 })
 export class ThreadPage implements OnInit {
-
-  //delete these arrays
-  // replies = [
-  //   'This is my reply',
-  //   'This is my helpful feedback',
-  //   'This is my criticism',
-  //   'This is my less than helpful feedback'
-  // ];
-  // repliers = [
-  //   'Helpful Hank',
-  //   'Knowledgable Karen',
-  //   'Critic Cathy',
-  //   'Trolling Tom'
-  // ];
+  replyForm:FormGroup;
+  replyList = [];
   replies = [];
-
+  likes:number;
+  dislikes:number;
   thread:any;
-  title:any;
-  views:any;
-  owner:any;
-  body:any;
 
   constructor(
     private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private itemService: ItemService,
     private router:Router,
     private alertController:AlertController
   ) { 
-    this.replies.push({'reply':'This is my reply','replier':'Helpful Hank'});
-    this.replies.push({'reply':'This is my helpful feedback','replier':'Knowledgable Karen'});
-    this.replies.push({'reply':'This is my criticism','replier':'Critic Cathy'});
-    this.replies.push({'reply':'This is my less than helpful feedback','replier':'Trolling Tom'});
+   
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.params.subscribe(
       param => {
         this.thread = param;
-        this.title = param.title;
-        this.views = this.views;
-        this.owner = param.owner;
-        this.body = param.body;
       });
+    this.likes=this.thread.likes;
+    this.dislikes=this.thread.dislikes;
+    this.replyForm = this.formBuilder.group({
+      body: new FormControl('', Validators.required)
+    });
+    var db = firebase.firestore().collection('ideas');
+    await db.doc(this.thread.docID).get().then(doc => {
+      this.replyList = doc.data().replies
+    })
+    this.getReplies();
   }
 
+  getReplies(){
+    var self = this;
+    var db = firebase.firestore().collection('replies');
+    self.replies = [];
+    for(let i = 0;i<this.replyList.length;i++)
+    {
+      db.doc(self.replyList[i]).get().then(doc => {
+        var reply = doc.data();
+        self.replies.push({body:reply.body,owner:reply.owner,docID:reply.docID})
+      });
+    }
+  }
+
+  async postReply(value){
+    var self = this;
+    var db = firebase.firestore();
+    await db.collection('replies').add({
+      "body": value.body,
+      "uid": self.itemService.currentUser.uid,
+      "owner": self.itemService.currentUser.handle,
+    }).then(function(docref) {
+      db.collection('replies').doc(docref.id).update({
+        "docID": docref.id
+      });
+      self.replyList.push(docref.id);
+      console.log('post replies'+docref.id);
+      console.log(self.replyList);
+    });
+    console.log(self.thread.docID);
+    await db.collection('ideas').doc(self.thread.docID).update({
+      "replies": self.replyList
+    })
+    self.getReplies();
+  }
+
+  like(){
+    var self = this;
+    var db = firebase.firestore().collection('ideas');
+    // if(self.thread.uid == self.itemService.currentUser.uid)
+    // return;
+    // else
+    {
+      var newVal = Number(self.likes) + Number(1);
+      db.doc(self.thread.docID).update({
+        likes: newVal
+      }).then(function() {
+        self.likes = Number(newVal);
+      })
+    }
+  }
+
+  dislike(){
+    var self = this;
+    var db = firebase.firestore().collection('ideas');
+    // if(self.thread.uid == self.itemService.currentUser.uid)
+    //   return;
+    // else
+    {
+      var newVal = Number(self.dislikes) + Number(1);
+      db.doc(self.thread.docID).update({
+        dislikes: newVal
+      }).then(function() {
+        self.dislikes = Number(newVal);
+      })
+    }
+  }
+
+  hideComment(): boolean {
+    if(this.itemService.currentUser.uid == this.thread.uid)
+      return true;
+    else
+      return false;
+  }
 }

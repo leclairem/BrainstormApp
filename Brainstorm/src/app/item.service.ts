@@ -29,6 +29,26 @@ export class ItemService {
 
   constructor() { }
 
+  generateThread(value){
+    var self = this;
+    var db = firebase.firestore();
+    db.collection('ideas').add({
+      title: value.title,
+      description: value.description,
+      category: value.category,
+      uid: self.currentUser.uid,
+      imgs: [value.img],
+      owner: self.currentUser.handle,
+      replies: [],
+      likes: 0.0,
+      dislikes: 0.0
+    }).then(function(docref) {
+      db.collection("ideas").doc(docref.id).update({
+        docID: docref.id
+      });
+    });
+  }
+
   getUserData(){
     var self = this;
     var db = firebase.firestore().collection('users');

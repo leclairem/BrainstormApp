@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><h2>My Ideas</h2></ion-title>
+    <ion-menu-button slot="start">
+    </ion-menu-button>
+    <ion-buttons slot="end">
+      <ion-button (click)="create()">
+        <!-- <ion-text>New Idea</ion-text> -->
+        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let idea of myIdeas" (click)="goToThread(idea)">
+      <ion-label>{{idea.title}}</ion-label>
+      <ion-img [src]="idea.thumb"></ion-img>
+    </ion-item>
+  </ion-list>
+</ion-content>

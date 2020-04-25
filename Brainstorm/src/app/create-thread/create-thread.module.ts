@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ThreadPageRoutingModule } from './thread-routing.module';
+import { CreateThreadPageRoutingModule } from './create-thread-routing.module';
 
-import { ThreadPage } from './thread.page';
+import { CreateThreadPage } from './create-thread.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { ThreadPage } from './thread.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    ThreadPageRoutingModule
+    CreateThreadPageRoutingModule
   ],
-  declarations: [ThreadPage]
+  declarations: [CreateThreadPage]
 })
-export class ThreadPageModule {}
+export class CreateThreadPageModule {}
