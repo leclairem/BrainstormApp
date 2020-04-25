@@ -27,6 +27,11 @@ export class AppComponent {
       url: '/home',
       icon: 'home'
     },
+	{
+		title: 'Messages',
+		url: '/conversations',
+		icon: 'chatbox-outline'
+	},
     // {
     //   title: 'List',
     //   url: '/list',
