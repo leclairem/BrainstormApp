@@ -8,6 +8,7 @@ import { Router,Routes, RouterModule, ActivatedRoute } from '@angular/router';
 
 import { IonicModule, AlertController } from '@ionic/angular';
 import { ItemService } from '../item.service';
+import * as firebase from'firebase';
 
 @Component({
   selector: 'app-thread',
@@ -36,6 +37,7 @@ export class ThreadPage implements OnInit {
   views:any;
   owner:any;
   body:any;
+  db = firebase.firestore();
 
   constructor(
     private route: ActivatedRoute,
