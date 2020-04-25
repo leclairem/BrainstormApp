@@ -62,4 +62,8 @@ export class LoginPage implements OnInit {
     this.router.navigate(["/register"]);
   }
 
+  resetPassword(){
+    this.router.navigate(['/reset-password']);
+  }
+
 }
