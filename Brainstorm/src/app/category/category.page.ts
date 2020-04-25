@@ -17,6 +17,9 @@ import { ItemService } from '../item.service';
 export class CategoryPage implements OnInit {
   title:any;
   catImg:any;
+  
+  tUID = 'Z7n0SrUyLeOMVJv6DkR15DY5NFu2';
+  twUID = 'bWLbUB0zU0RSDzDJgew5fJX891q2';
 
   constructor(
     private route: ActivatedRoute,
@@ -33,4 +36,8 @@ export class CategoryPage implements OnInit {
       });
   }
 
+  convTest(){
+	  console.log('Test');
+	  this.itemService.startConversation(this.tUID);
+  }
 }
