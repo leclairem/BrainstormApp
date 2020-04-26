@@ -56,7 +56,6 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
     });
   }
 }

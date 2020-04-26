@@ -19,6 +19,7 @@ export class ThreadPage implements OnInit {
   replyForm:FormGroup;
   replyList = [];
   replies = [];
+  imgs = [];
   likes:number;
   dislikes:number;
   thread:any;
@@ -47,7 +48,8 @@ export class ThreadPage implements OnInit {
     });
     var db = firebase.firestore().collection('ideas');
     await db.doc(this.thread.docID).get().then(doc => {
-      this.replyList = doc.data().replies
+      this.replyList = doc.data().replies;
+      this.imgs = doc.data().imgs;
     })
     this.getReplies();
   }

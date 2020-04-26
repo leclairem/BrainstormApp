@@ -24,10 +24,10 @@
     <!-- <ion-note>{{thread.owner}}</ion-note> -->
     <h4>{{thread.owner}}</h4>
     <div>
-    <ion-img [src]="thread.thumb"></ion-img>
+    <ion-img *ngFor='let img of imgs' [src]="img"></ion-img>
     <h5><a (click)="like()">Like</a>{{ likes }}
     <a (click)="dislike()"> Dislike</a>{{ dislikes }}</h5>
-  </div>
+    </div>
   </ion-card>
   <ion-card *ngFor='let reply of replies'>
     <ion-item>

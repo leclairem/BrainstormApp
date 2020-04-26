@@ -21,4 +21,9 @@
   </ion-item>
   <ion-button class="submit-btn" expand="block" type="submit" [disabled]="!editForm.valid">Save Changes</ion-button>
 </form>
+<ion-button (click)="uploadPic()">
+  Take Picture
+</ion-button>
+
+<img [src]="cameraImg" />
 </ion-content>
