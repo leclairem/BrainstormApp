@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <br>
+    <br>
+    <div style="margin-left: 23px;" class="ion-text-center"><h5>{{thread.title}}</h5></div>
+    <ion-buttons slot="end">
+      <ion-button >DELETE</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<form [formGroup]="editForm" (submit)="saveChanges(editForm.value)">
+  <ion-label>Edit Description</ion-label>
+  <ion-item>
+    <ion-textarea rows="10" formControlName="description" value={{thread.description}}></ion-textarea>
+  </ion-item>
+  <ion-button class="submit-btn" expand="block" type="submit" [disabled]="!editForm.valid">Save Changes</ion-button>
+</form>
+</ion-content>

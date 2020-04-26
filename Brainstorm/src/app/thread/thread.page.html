@@ -1,5 +1,5 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="Primary">
+<ion-header>
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -7,36 +7,41 @@
 <!-- <ion-menu-button slot="start">
     <ion-button slot="end"></ion-button>
 </ion-menu-button> -->
-<img slot="end" src="/assets/2.png">
+<img [hidden]="isOwner()" slot="end" src="/assets/2.png">
+<ion-buttons slot="end" [hidden]="!isOwner">
+  <ion-button (click)="editIdea()">Edit</ion-button>
+</ion-buttons>
 </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<ion-card>
-  <h3>{{thread.description}}</h3>
-  <br>
-  <!-- <ion-note>{{thread.owner}}</ion-note> -->
-  <h4>{{thread.owner}}</h4>
-  <div>
-  <!-- <ion-note><a (click)="like()">Like</a>{{ likes }}</ion-note>
-  <ion-note><a (click)="dislike()"> Dislike</a>{{ dislikes }}</ion-note> -->
-  <h5><a (click)="like()">Like</a>{{ likes }}
-  <a (click)="dislike()"> Dislike</a>{{ dislikes }}</h5>
-</div>
-</ion-card>
-<ion-card *ngFor='let reply of replies'>
-  <ion-item>
-    <ion-label class='stacked'>
-      <h2>{{reply.body}}</h2>
-      <ion-note>{{reply.owner}}</ion-note>
-    </ion-label>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-card>
+    <h3>{{threadDescription}}</h3>
+    <br>
+    <!-- <ion-note>{{thread.owner}}</ion-note> -->
+    <h4>{{thread.owner}}</h4>
+    <div>
+    <ion-img [src]="thread.thumb"></ion-img>
+    <h5><a (click)="like()">Like</a>{{ likes }}
+    <a (click)="dislike()"> Dislike</a>{{ dislikes }}</h5>
+  </div>
+  </ion-card>
+  <ion-card *ngFor='let reply of replies'>
+    <ion-item>
+      <ion-label class='stacked'>
+        <h2>{{reply.body}}</h2>
+        <ion-note>{{reply.owner}}</ion-note>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+  <ion-item [hidden]="false">
+    <form [formGroup]="replyForm" (submit)="postReply(replyForm.value)">
+      <ion-label color="primary" position="floating">Your Thoughts</ion-label>
+      <ion-textarea formControlName="body"></ion-textarea>
+      <ion-button class="submit-btn" expand="block" type="submit" [disabled]="!replyForm.valid">Post</ion-button>
+    </form>
   </ion-item>
-</ion-card>
-<ion-item [hidden]="hideComment()">
-  <form [formGroup]="replyForm" (submit)="postReply(replyForm.value)">
-    <ion-label color="primary" position="floating">Your Thoughts</ion-label>
-    <ion-textarea formControlName="body"></ion-textarea>
-    <ion-button class="submit-btn" expand="block" type="submit" [disabled]="!replyForm.valid">Post</ion-button>
-  </form>
-</ion-item>
 </ion-content>

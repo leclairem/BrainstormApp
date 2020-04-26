@@ -22,6 +22,7 @@ export class ThreadPage implements OnInit {
   likes:number;
   dislikes:number;
   thread:any;
+  threadDescription: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +39,7 @@ export class ThreadPage implements OnInit {
       param => {
         this.thread = param;
       });
+    this.threadDescription = this.thread.description;
     this.likes=this.thread.likes;
     this.dislikes=this.thread.dislikes;
     this.replyForm = this.formBuilder.group({
@@ -88,9 +90,9 @@ export class ThreadPage implements OnInit {
   like(){
     var self = this;
     var db = firebase.firestore().collection('ideas');
-    // if(self.thread.uid == self.itemService.currentUser.uid)
-    // return;
-    // else
+    if(self.thread.uid == self.itemService.currentUser.uid)
+    return;
+    else
     {
       var newVal = Number(self.likes) + Number(1);
       db.doc(self.thread.docID).update({
@@ -104,9 +106,9 @@ export class ThreadPage implements OnInit {
   dislike(){
     var self = this;
     var db = firebase.firestore().collection('ideas');
-    // if(self.thread.uid == self.itemService.currentUser.uid)
-    //   return;
-    // else
+    if(self.thread.uid == self.itemService.currentUser.uid)
+      return;
+    else
     {
       var newVal = Number(self.dislikes) + Number(1);
       db.doc(self.thread.docID).update({
@@ -117,10 +119,24 @@ export class ThreadPage implements OnInit {
     }
   }
 
-  hideComment(): boolean {
+  isOwner(): boolean {
     if(this.itemService.currentUser.uid == this.thread.uid)
       return true;
     else
       return false;
+  }
+  
+  doRefresh(event){
+    var self = this;
+    var db = firebase.firestore();
+    db.collection('ideas').doc(self.thread.docID).get().then(doc => {
+      self.threadDescription = doc.data().description;
+    });
+    event.target.complete();
+  }
+
+  editIdea(){
+    var self = this;
+    self.router.navigate(['/edit-idea',self.thread]);
   }
 }

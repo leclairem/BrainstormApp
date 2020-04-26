@@ -59,6 +59,10 @@ const routes: Routes = [
     path: 'create-thread',
     loadChildren: () => import('./create-thread/create-thread.module').then( m => m.CreateThreadPageModule)
   },
+  {
+    path: 'edit-idea',
+    loadChildren: () => import('./edit-idea/edit-idea.module').then( m => m.EditIdeaPageModule)
+  },
 
 ];
 
