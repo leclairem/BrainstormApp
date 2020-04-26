@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "526678353309",
+    "firebase_url": "https://brainstorm-546.firebaseio.com",
+    "project_id": "brainstorm-546",
+    "storage_bucket": "brainstorm-546.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526678353309:android:b316e94eb72b6b25b3fb74",
+        "android_client_info": {
+          "package_name": "com.firebaseio.brainstorm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526678353309-p96gmol6o9vggb3co33fsb9erhh1s5eo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOxsXbTRtl2UyVgJ-pqItdF_Rjs4pBo8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526678353309-p96gmol6o9vggb3co33fsb9erhh1s5eo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
