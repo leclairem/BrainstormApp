@@ -77,35 +77,48 @@ export class ItemService {
   startConversation(otherUID:any){
 	  var name1 = this.currentUser.handle;
 	  var name2 = 'Testing';
-	  //const docID = this.db.createId();
-	  var conversations = this.currentUser.conversations; 
+	  var docID;
+	  var id = otherUID + this.currentUser.uid;
+	  var db = firebase.firestore();
+	  db.collection('messages').add({
+			id: id
+	  });
+	  db.collection('messages').where('id','==',`${id}`).get().then(snapshot => {
+      snapshot.forEach(doc => {
+		  docID = doc.id;
+		});
+	  });
+	  console.log("After first attemp");
+	  var conversations = [];
+	   if(this.currentUser.hasOwnProperty('conversations')){
+			conversations = this.currentUser.conversations;
+	  }
+	  //var conversations = this.currentUser.conversations; 
 	  //conversations.push({'docID':docID, 'name1':name1, 'name2':name2});
 	  var self = this;
-	  var db = firebase.firestore().collection('users');
-    db.where('uid','==',`${self.uid}`).get().then(snapshot => {
+	  //db = firebase.firestore().collection('users');
+    db.collection('users').where('uid','==',`${otherUID}`).get().then(snapshot => {
       snapshot.forEach(doc => {
-        console.log(doc.id);
-		var docID = doc.id;
-		conversations.push({'docID':doc.id, 'name1':name1, 'name2':name2});
-		db.doc(docID).update({'conversations':conversations}); 
-		//console.log(doc.data());
+		var temp = doc.data();
+		name2 = temp.handle;
+		var tempConv = [];
+		if(temp.hasOwnProperty('conversations')){
+			tempConv = temp.conversations;
+	  }
+		tempConv.push({'docID':docID, 'name1':name1, 'name2':name2});
+		//console.log(tempConv);
+		db.collection('users').doc(doc.id).set({'conversations':tempConv}); 
       });
     });
-  
-	  
-	  /* var db = firebase.firestore().collection('users');
-		//console.log(db.where('uid','==',`${self.uid}`));
-		db.where("uid", "==",'${self.uid}')
-		  .get()
-		  .then(function(querySnapshot) {
-			  querySnapshot.forEach(function(doc) {
-				  console.log(doc.id, " => ", doc.data());
-				  // Build doc ref from doc.id
-				  //db.collection("users").doc(doc.id).update({foo: "bar"}); 
-			  });
-		 }) */
-		//console.log(tdocID);
-	//  db.where('uid','==',`${otherUID}`).update( 'conversations':conversations.push(
-		//				{'docID':docID, 'name1':name1, 'name2':name2}) )
+	//console.log("Between");
+    db.collection('users').where('uid','==',`${self.uid}`).get().then(snapshot => {
+      snapshot.forEach(doc => {
+        //console.log(doc.id);
+		//var docID = doc.id;
+		conversations.push({'docID':docID, 'name1':name1, 'name2':name2});
+		//console.log(conversations);
+		db.collection('users').doc(doc.id).update({'conversations':conversations}); 
+      });
+    });
   }
 }

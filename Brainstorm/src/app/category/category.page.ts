@@ -48,6 +48,6 @@ export class CategoryPage implements OnInit {
 
   convTest(){
 	  console.log('Test');
-	  this.itemService.startConversation(this.tUID);
+	  this.itemService.startConversation(this.twUID);
   }
 }

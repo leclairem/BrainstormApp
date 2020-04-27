@@ -32,6 +32,11 @@ export class AppComponent {
       url: '/my-ideas',
       icon: 'list'
     },
+	{
+      title: 'Messages',
+      url: '/conversations',
+      icon: 'chatbox-outline'
+    },
     {
       title: 'User Settings',
       url: '/user-settings',

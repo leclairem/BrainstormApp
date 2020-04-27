@@ -24,7 +24,9 @@ export class ConversationsPage implements OnInit {
   ngOnInit() {
 	  this.handle = this.itemService.currentUser.handle;
 	  console.log(this.handle);
-	  this.conversations = this.itemService.currentUser.conversations;
+	  if(this.itemService.currentUser.hasOwnProperty('conversations')){
+			this.conversations = this.itemService.currentUser.conversations;
+	  }
   }
 
 }
