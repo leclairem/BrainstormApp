@@ -53,10 +53,12 @@ export class EditIdeaPage implements OnInit {
     var self = this;
     var db = firebase.firestore();
     await this.pickImage();
-    db.collection('ideas').doc(self.thread.docID).get().then(doc => {
+    await db.collection('ideas').doc(self.thread.docID).get().then(doc => {
       self.imgs = doc.data().imgs;
     });
+    
     self.imgs.push(self.imgURL);
+    
     await db.collection('ideas').doc(self.thread.docID).update({
       'imgs': self.imgs
     });
