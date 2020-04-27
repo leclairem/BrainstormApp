@@ -8,6 +8,7 @@ import { Router,Routes, RouterModule, ActivatedRoute } from '@angular/router';
 
 import { IonicModule, AlertController } from '@ionic/angular';
 import { ItemService } from '../item.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-category',
@@ -17,6 +18,7 @@ import { ItemService } from '../item.service';
 export class CategoryPage implements OnInit {
   title:any;
   catImg:any;
+  ideas = [];
   
   tUID = 'Z7n0SrUyLeOMVJv6DkR15DY5NFu2';
   twUID = 'bWLbUB0zU0RSDzDJgew5fJX891q2';
@@ -28,12 +30,20 @@ export class CategoryPage implements OnInit {
     private alertController:AlertController
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    var self = this;
     this.route.params.subscribe(
       param => {
         this.title = param.title;
         this.catImg = param.img;
       });
+    console.log(this.title);
+    self.ideas = await self.itemService.loadCategory(self.title);
+    console.log(self.ideas);
+  }
+
+  goToThread(object){
+    this.router.navigate(['/thread',object]);
   }
 
   convTest(){

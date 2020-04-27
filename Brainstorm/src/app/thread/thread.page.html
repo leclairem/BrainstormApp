@@ -8,7 +8,7 @@
     <ion-button slot="end"></ion-button>
 </ion-menu-button> -->
 <img [hidden]="isOwner()" slot="end" src="/assets/2.png">
-<ion-buttons slot="end" [hidden]="!isOwner">
+<ion-buttons slot="end" [hidden]="!isOwner()">
   <ion-button (click)="editIdea()">Edit</ion-button>
 </ion-buttons>
 </ion-toolbar>
