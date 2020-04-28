@@ -23,7 +23,8 @@ export class ConversationsPage implements OnInit {
 
   ngOnInit() {
 	  this.handle = this.itemService.currentUser.handle;
-	  console.log(this.handle);
+	  console.log(this.handle + ' Cov');
+	  this.itemService.getUserData();
 	  if(this.itemService.currentUser.hasOwnProperty('conversations')){
 			this.conversations = this.itemService.currentUser.conversations;
 	  }

@@ -62,7 +62,7 @@ export class ThreadPage implements OnInit {
     {
       db.doc(self.replyList[i]).get().then(doc => {
         var reply = doc.data();
-        self.replies.push({body:reply.body,owner:reply.owner,docID:reply.docID})
+        self.replies.push({body:reply.body,owner:reply.owner,docID:reply.docID, uid:reply.uid})
       });
     }
   }
@@ -140,5 +140,12 @@ export class ThreadPage implements OnInit {
   editIdea(){
     var self = this;
     self.router.navigate(['/edit-idea',self.thread]);
+  }
+  message(person){
+	  var otherUID = person.uid;
+	  if(otherUID != this.itemService.currentUser.uid){
+		var mes = this.itemService.startConversation(otherUID);
+	  }
+	this.router.navigate(['conversations']);
   }
 }

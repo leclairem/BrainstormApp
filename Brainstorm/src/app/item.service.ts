@@ -76,49 +76,86 @@ export class ItemService {
   
   startConversation(otherUID:any){
 	  var name1 = this.currentUser.handle;
-	  var name2 = 'Testing';
+	  var name2 = '';
 	  var docID;
 	  var id = otherUID + this.currentUser.uid;
 	  var db = firebase.firestore();
-	  db.collection('messages').add({
-			id: id
-	  });
-	  db.collection('messages').where('id','==',`${id}`).get().then(snapshot => {
+	  var exist = false;
+	  
+	  db.collection('message').where('id','==',`${id}`).get().then(snapshot => {
       snapshot.forEach(doc => {
-		  docID = doc.id;
+		  this.exist = true;
+		  console.log(exist);
+      });
+    });
+	db.collection('messages').where('id','==',`${this.currentUser.uid + otherUID}`).get().then(snapshot => {
+      snapshot.forEach(doc => {
+		  this.exist = true;
+		  console.log(exist);
+      });
+    });
+	console.log(exist);
+	if(!exist){
+		  db.collection('messages').add({
+				id: id
+		  });
+		  db.collection('messages').where('id','==',`${id}`).get().then(snapshot => {
+		  snapshot.forEach(doc => {
+			  docID = doc.id;
+			});
+		  });
+		  console.log("After first attemp");
+		  var conversations = [];
+		   if(this.currentUser.hasOwnProperty('conversations')){
+				conversations = this.currentUser.conversations;
+		  }
+		  //var conversations = this.currentUser.conversations; 
+		  //conversations.push({'docID':docID, 'name1':name1, 'name2':name2});
+		  var self = this;
+		  //db = firebase.firestore().collection('users');
+		db.collection('users').where('uid','==',`${otherUID}`).get().then(snapshot => {
+		  snapshot.forEach(doc => {
+			var temp = doc.data();
+			name2 = temp.handle;
+			var tempConv = [];
+			if(temp.hasOwnProperty('conversations')){
+				tempConv = temp.conversations;
+		  }
+			tempConv.push({'docID':docID, 'name1':name1, 'name2':name2});
+			//console.log(tempConv);
+			db.collection('users').doc(doc.id).update({'conversations':tempConv}); 
+		  });
 		});
-	  });
-	  console.log("After first attemp");
-	  var conversations = [];
-	   if(this.currentUser.hasOwnProperty('conversations')){
-			conversations = this.currentUser.conversations;
-	  }
-	  //var conversations = this.currentUser.conversations; 
-	  //conversations.push({'docID':docID, 'name1':name1, 'name2':name2});
-	  var self = this;
-	  //db = firebase.firestore().collection('users');
-    db.collection('users').where('uid','==',`${otherUID}`).get().then(snapshot => {
-      snapshot.forEach(doc => {
-		var temp = doc.data();
-		name2 = temp.handle;
-		var tempConv = [];
-		if(temp.hasOwnProperty('conversations')){
-			tempConv = temp.conversations;
-	  }
-		tempConv.push({'docID':docID, 'name1':name1, 'name2':name2});
-		//console.log(tempConv);
-		db.collection('users').doc(doc.id).set({'conversations':tempConv}); 
-      });
-    });
-	//console.log("Between");
-    db.collection('users').where('uid','==',`${self.uid}`).get().then(snapshot => {
-      snapshot.forEach(doc => {
-        //console.log(doc.id);
-		//var docID = doc.id;
-		conversations.push({'docID':docID, 'name1':name1, 'name2':name2});
-		//console.log(conversations);
-		db.collection('users').doc(doc.id).update({'conversations':conversations}); 
-      });
-    });
+		//console.log("Between");
+		db.collection('users').where('uid','==',`${self.uid}`).get().then(snapshot => {
+		  snapshot.forEach(doc => {
+			//console.log(doc.id);
+			//var docID = doc.id;
+			conversations.push({'docID':docID, 'name1':name1, 'name2':name2});
+			//console.log(conversations);
+			db.collection('users').doc(doc.id).update({'conversations':conversations}); 
+		  });
+		});
+		//this.currentUser.conversations.push({'docID':docID, 'name1':name1, 'name2':name2});
+	} /* else {
+		db.collection('messages').where('id','==',`${id}`).get().then(snapshot => {
+		  snapshot.forEach(doc => {
+			  docID = doc.id;
+			});
+		  });
+		  db.collection('messages').where('id','==',`${this.currentUser.uid + otherUID}`).get().then(snapshot => {
+		  snapshot.forEach(doc => {
+			  docID = doc.id;
+			});
+		  });
+		} 
+	} */
+		  /* for(var i = 0; i < this.currentUser.conversations.length; i++){
+			if(this.currentUser.conversations[i].docID == docID){
+				return this.currentUser.conversations[i];
+			}
+	//var retVal = {'docID':docID, 'name1':name1, 'name2':name2};
+	//return retVal;
+	*/
   }
 }

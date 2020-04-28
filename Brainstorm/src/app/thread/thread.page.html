@@ -23,6 +23,9 @@
     <br>
     <!-- <ion-note>{{thread.owner}}</ion-note> -->
     <h4>{{thread.owner}}</h4>
+	<ion-button (click)="message(thread)">
+			  <ion-icon name="mail-outline" ></ion-icon>
+	</ion-button>
     <div>
     <ion-img *ngFor='let img of imgs' [src]="img"></ion-img>
     <h5><a (click)="like()">Like</a>{{ likes }}
@@ -35,6 +38,9 @@
         <h2>{{reply.body}}</h2>
         <ion-note>{{reply.owner}}</ion-note>
       </ion-label>
+	  <ion-button (click)="message(reply)">
+			  <ion-icon name="mail-outline" ></ion-icon>
+	</ion-button>
     </ion-item>
   </ion-card>
   <ion-item [hidden]="false">
