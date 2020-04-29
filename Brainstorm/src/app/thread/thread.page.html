@@ -1,12 +1,10 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header [translucent]="true">
+  <ion-toolbar color="Primary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button color="secondary"></ion-back-button>
     </ion-buttons>
-    <div class="ion-text-center"><h2>BrainStorm</h2><h3>{{thread.title}}</h3></div>
-<!-- <ion-menu-button slot="start">
-    <ion-button slot="end"></ion-button>
-</ion-menu-button> -->
+    <div class="ion-text-center"><ion-text color="secondary">
+      <h2>BrainStorm</h2><h3>{{thread.title}}</h3></ion-text></div>
 <img [hidden]="isOwner()" slot="end" src="/assets/2.png">
 <ion-buttons slot="end" [hidden]="!isOwner()">
   <ion-button (click)="editIdea()">Edit</ion-button>
@@ -14,7 +12,7 @@
 </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="background">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>

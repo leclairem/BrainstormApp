@@ -1,7 +1,7 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header [translucent]="true">
+  <ion-toolbar color="Primary">
     <ion-buttons>
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button color="secondary" defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-card>
     
@@ -11,7 +11,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="background">
     
   <ion-list>
     <ion-item *ngFor="let idea of ideas" (click)="goToThread(idea)">

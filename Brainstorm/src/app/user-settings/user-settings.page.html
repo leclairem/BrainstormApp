@@ -1,14 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="Primary">
-    <div class="ion-text-center"><h2>BrainStorm</h2><h3>User Settings</h3></div>
-<ion-menu-button slot="start">
+    <div class="ion-text-center"><ion-text color="secondary"><h2>BrainStorm</h2>
+      <h3>User Settings</h3></ion-text></div>
+<ion-menu-button color="secondary" slot="start">
     <ion-button slot="end"></ion-button>
 </ion-menu-button>
 <img slot="end" src="/assets/2.png">
 </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="background">
   <ion-item>
     <ion-label>Email</ion-label>
     <div>
