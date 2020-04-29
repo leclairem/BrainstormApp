@@ -5,6 +5,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import * as firebase from "firebase";
 import { ItemService } from '../item.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-thread',
@@ -24,7 +25,8 @@ export class CreateThreadPage implements OnInit {
  	  public formBuilder: FormBuilder,
  	  public itemService: ItemService,
     private camera: Camera,
-    private file: File
+    private file: File,
+    public loadingController: LoadingController
   ) { }
 
   ngOnInit() {
@@ -38,7 +40,15 @@ export class CreateThreadPage implements OnInit {
 
   async createIdea(value){
     await this.itemService.generateThread(value);
+    await this.presentLoading();
     this.router.navigate(['/my-ideas']);
+  }
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Generating your IDea\nPlease wait...',
+      duration: 2000
+    });
+    await loading.present();
   }
 
   async pickImage() {

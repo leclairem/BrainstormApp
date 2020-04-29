@@ -20,11 +20,12 @@ export class ThreadPage implements OnInit {
   replyList = [];
   replies = [];
   imgs = [];
+  likedBy=[];
   likes:number;
   dislikes:number;
   thread:any;
   threadDescription: any;
-  likable:Boolean;
+  likable = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +38,7 @@ export class ThreadPage implements OnInit {
   }
 
   async ngOnInit() {
+    var self = this;
     this.route.params.subscribe(
       param => {
         this.thread = param;
@@ -49,10 +51,14 @@ export class ThreadPage implements OnInit {
     });
     var db = firebase.firestore().collection('ideas');
     await db.doc(this.thread.docID).get().then(doc => {
-      this.replyList = doc.data().replies;
-      this.imgs = doc.data().imgs;
+      self.replyList = doc.data().replies;
+      self.imgs = doc.data().imgs;
+      self.likedBy = doc.data().likedBy;
     })
     this.getReplies();
+    console.log('likable '+this.likable);
+    await this.canLike();
+    console.log('likable '+this.likable);
   }
 
   getReplies(){
@@ -63,7 +69,7 @@ export class ThreadPage implements OnInit {
     {
       db.doc(self.replyList[i]).get().then(doc => {
         var reply = doc.data();
-        self.replies.push({body:reply.body,owner:reply.owner,docID:reply.docID, uid:reply.uid})
+        self.replies.push({body:reply.body,owner:reply.owner,docID:reply.docID, uid:reply.uid, date:reply.date})
       });
     }
   }
@@ -71,10 +77,12 @@ export class ThreadPage implements OnInit {
   async postReply(value){
     var self = this;
     var db = firebase.firestore();
+    var date = Date.now();
     await db.collection('replies').add({
       "body": value.body,
       "uid": self.itemService.currentUser.uid,
       "owner": self.itemService.currentUser.handle,
+      "date": date
     }).then(function(docref) {
       db.collection('replies').doc(docref.id).update({
         "docID": docref.id
@@ -88,54 +96,102 @@ export class ThreadPage implements OnInit {
       "replies": self.replyList
     })
     self.getReplies();
+    self.replyForm.reset();
   }
 
-  like(){
+  async like(){
     var self = this;
     var db = firebase.firestore().collection('ideas');
     if(self.thread.uid == self.itemService.currentUser.uid)
-    return;
+      return;
+    else if(!self.isLikable())
+      return;
     else
     {
-      var newVal = Number(self.likes) + Number(1);
-      db.doc(self.thread.docID).update({
-        likes: newVal
+      var newVal = 0;
+      await db.doc(self.thread.docID).get().then(doc => {
+        self.likedBy = doc.data().likedBy;
+        self.likedBy.push(self.itemService.currentUser.uid);
+        newVal = Number(doc.data().likes) + Number(1);
+      })
+      await db.doc(self.thread.docID).update({
+        'likes': newVal,
+        'likedBy': self.likedBy
       }).then(function() {
+        self.likable = false;
         self.likes = Number(newVal);
       })
     }
   }
 
-  dislike(){
+  async dislike(){
     var self = this;
     var db = firebase.firestore().collection('ideas');
     if(self.thread.uid == self.itemService.currentUser.uid)
       return;
     else
     {
-      var newVal = Number(self.dislikes) + Number(1);
-      db.doc(self.thread.docID).update({
-        dislikes: newVal
+      // var newVal = Number(self.dislikes) + Number(1);
+      var newVal = 0;
+      await db.doc(self.thread.docID).get().then(doc => {
+        self.likedBy = doc.data().likedBy;
+        self.likedBy.push(self.itemService.currentUser.uid);
+        newVal = Number(doc.data().dislikes) + Number(1);
+      })
+      await db.doc(self.thread.docID).update({
+        'dislikes': newVal,
+        'likedBy': self.likedBy
       }).then(function() {
+        self.likable = false;
         self.dislikes = Number(newVal);
       })
     }
   }
 
-  async hasLiked(){
+  async canLike(){
     var self = this;
     var db = firebase.firestore().collection('ideas');
-    var likedBy = [];
-    await db.doc(self.thread.docID).get().then(doc => {
-      likedBy = doc.data().likedBy
-    });
-    for(let i=0;i<likedBy.length;i++)
+    if(self.thread.uid == self.itemService.currentUser.uid)
     {
-      if(likedBy[i] == self.itemService.currentUser.uid)
-        self.likable = true;
+      self.likable = false;
     }
-    self.likable = false;
+    else if (self.containsOnLoad())
+    {
+      self.likable = false;
+    }
+    else
+    {
+      await db.doc(self.thread.docID).get().then(doc => {
+        self.likedBy = doc.data().likedBy
+      });
+      for(let i=0;i<self.likedBy.length;i++)
+      {
+        if(self.likedBy[i] == self.itemService.currentUser.uid)
+        {
+          self.likable = false;
+        }
+      }
+    }
   }
+
+  isLikable():Boolean{
+    return this.likable;
+  }
+
+  containsOnLoad():Boolean{
+    var self = this;
+    for(let i=0;i<self.likedBy.length;i++)
+    {
+      if(self.likedBy[i] == self.itemService.currentUser.uid)
+      {
+        console.log(self.likedBy[i]);
+        console.log(self.itemService.currentUser.uid);
+        return true;
+      }
+    }
+    return false;
+  }
+
 
   isOwner(): boolean {
     if(this.itemService.currentUser.uid == this.thread.uid)

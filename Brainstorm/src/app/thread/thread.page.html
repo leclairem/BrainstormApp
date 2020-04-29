@@ -27,9 +27,14 @@
 			  <ion-icon name="mail-outline" ></ion-icon>
 	</ion-button>
     <div>
-    <ion-img *ngFor='let img of imgs' [src]="img"></ion-img>
-    <h5><a (click)="like()">Like</a>{{ likes }}
-    <a (click)="dislike()"> Dislike</a>{{ dislikes }}</h5>
+      <ion-img *ngFor='let img of imgs' [src]="img"></ion-img>
+    </div>
+    <div [hidden]="!isLikable()">
+      <h5><a (click)="like()">Like</a>{{ likes }}
+      <a (click)="dislike()"> Dislike</a>{{ dislikes }}</h5>
+    </div>
+    <div [hidden]="isLikable()">
+      <h5>Likes{{ likes }} Dislikes{{ dislikes }}</h5>
     </div>
   </ion-card>
   <ion-card *ngFor='let reply of replies'>
@@ -39,10 +44,13 @@
       </ion-text>
     </ion-card-content>
       <ion-item lines="none">
-        <ion-note slot='end'>{{reply.owner}}</ion-note>
-        <ion-button slot='end' (click)="message(reply)">
-            <ion-icon name="mail-outline" ></ion-icon>
+        <ion-button slot='start' (click)="message(reply)">
+          <ion-icon name="mail-outline" ></ion-icon>
         </ion-button>
+        <ion-note slot='start'>{{reply.owner}}</ion-note>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-note slot="start">relpied on {{reply.date | date: 'MM/dd/yyyy HH:mm'}}</ion-note>
       </ion-item>
   </ion-card>
   <ion-item [hidden]="false">

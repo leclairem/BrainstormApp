@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemService } from '../item.service';
 import * as firebase from 'firebase';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-my-ideas',
@@ -15,13 +16,14 @@ export class MyIdeasPage implements OnInit {
   constructor(
     private router: Router,
     private itemService: ItemService,
+    public loadingController: LoadingController
   ) { }
 
-  ionViewWillEnter(){
+  async ionViewWillEnter(){
     var self = this;
     var db = firebase.firestore();
     self.myIdeas = [];
-    db.collection('ideas').where('uid','==',self.itemService.currentUser.uid).get()
+    await db.collection('ideas').where('uid','==',self.itemService.currentUser.uid).get()
     .then(snapshot => {
       snapshot.forEach(doc => {
         var idea = doc.data();
@@ -30,6 +32,14 @@ export class MyIdeasPage implements OnInit {
           owner:idea.owner,replies:idea.replies,likes:idea.likes,dislikes:idea.dislikes});
       });
     });
+    // this.presentLoading();
+  }
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
   }
 
   ngOnInit() {
