@@ -24,10 +24,15 @@ export class ConversationsPage implements OnInit {
   ngOnInit() {
 	  this.handle = this.itemService.currentUser.handle;
 	  console.log(this.handle + ' Cov');
-	  this.itemService.getUserData();
+	  
 	  if(this.itemService.currentUser.hasOwnProperty('conversations')){
 			this.conversations = this.itemService.currentUser.conversations;
 	  }
+	  this.updateList();
+  }
+  
+  async updateList(){
+	  await this.itemService.getUserData();
   }
 
 }

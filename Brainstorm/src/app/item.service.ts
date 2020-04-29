@@ -75,13 +75,13 @@ export class ItemService {
     });
   }
   
-  startConversation(otherUID:any){
+  async startConversation(otherUID:any){
 	  var name1 = this.currentUser.handle;
 	  var name2 = '';
 	  var docID;
 	  var id = otherUID + this.currentUser.uid;
 	  var db = firebase.firestore();
-	  var exist = false;
+	  /* var exist = false;
 	  
 	  db.collection('message').where('id','==',`${id}`).get().then(snapshot => {
       snapshot.forEach(doc => {
@@ -94,9 +94,9 @@ export class ItemService {
 		  exist = true;
 		  console.log(exist);
       });
-    });
-	console.log(exist);
-	if(!exist){
+    }); */
+	//console.log(exist);
+	if(await this.checkConv(otherUID)){
 		  db.collection('messages').add({
 				id: id
 		  });
@@ -137,26 +137,26 @@ export class ItemService {
 			db.collection('users').doc(doc.id).update({'conversations':conversations}); 
 		  });
 		});
-		//this.currentUser.conversations.push({'docID':docID, 'name1':name1, 'name2':name2});
-	} /* else {
-		db.collection('messages').where('id','==',`${id}`).get().then(snapshot => {
-		  snapshot.forEach(doc => {
-			  docID = doc.id;
-			});
-		  });
-		  db.collection('messages').where('id','==',`${this.currentUser.uid + otherUID}`).get().then(snapshot => {
-		  snapshot.forEach(doc => {
-			  docID = doc.id;
-			});
-		  });
-		} 
-	} */
-		  /* for(var i = 0; i < this.currentUser.conversations.length; i++){
-			if(this.currentUser.conversations[i].docID == docID){
-				return this.currentUser.conversations[i];
-			}
-	//var retVal = {'docID':docID, 'name1':name1, 'name2':name2};
-	//return retVal;
-	*/
+	} 
+  }
+  
+  checkConv(otherUID){
+	  var id = otherUID + this.currentUser.uid;
+	  var oid = this.currentUser.uid + otherUID;
+	  var db = firebase.firestore();
+	  db.collection('message').where('id','==',`${id}`).get().then(snapshot => {
+      snapshot.forEach(doc => {
+		  console.log(true);
+		  return true;
+      });
+    });
+	db.collection('messages').where('id','==',`${this.currentUser.uid + otherUID}`).get().then(snapshot => {
+      snapshot.forEach(doc => {
+		  console.log(true);
+		  return true;
+      });
+    });
+	console.log(false);
+	return false;
   }
 }
