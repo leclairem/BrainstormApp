@@ -43,6 +43,11 @@ export class ThreadPage implements OnInit {
       param => {
         this.thread = param;
       });
+    if(this.thread.delete == 1)
+    {
+      this.router.navigate(['/my-ideas']);
+      return;
+    }
     this.threadDescription = this.thread.description;
     this.likes=this.thread.likes;
     this.dislikes=this.thread.dislikes;
@@ -200,10 +205,10 @@ export class ThreadPage implements OnInit {
       return false;
   }
   
-  doRefresh(event){
+  async doRefresh(event){
     var self = this;
     var db = firebase.firestore();
-    db.collection('ideas').doc(self.thread.docID).get().then(doc => {
+    await db.collection('ideas').doc(self.thread.docID).get().then(doc => {
       self.threadDescription = doc.data().description;
     });
     event.target.complete();

@@ -15,7 +15,7 @@ import { LoadingController } from '@ionic/angular';
 export class CreateThreadPage implements OnInit {
 
   newIdeaForm: FormGroup;
-  cameraImg:string;
+  cameraImg='/assets/1.png';
   imgURL='/assets/1.png';
   imgPath='';
   thumbPath='';
@@ -39,13 +39,13 @@ export class CreateThreadPage implements OnInit {
   }
 
   async createIdea(value){
-    await this.itemService.generateThread(value);
+    await this.itemService.generateThread(value, this.imgPath);
     await this.presentLoading();
     this.router.navigate(['/my-ideas']);
   }
   async presentLoading() {
     const loading = await this.loadingController.create({
-      message: 'Generating your IDea\nPlease wait...',
+      message: 'Generating your Idea\nPlease wait...',
       duration: 2000
     });
     await loading.present();

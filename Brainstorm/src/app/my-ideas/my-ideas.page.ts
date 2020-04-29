@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ItemService } from '../item.service';
 import * as firebase from 'firebase';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, IonRefresher } from '@ionic/angular';
 
 @Component({
   selector: 'app-my-ideas',
@@ -16,7 +16,8 @@ export class MyIdeasPage implements OnInit {
   constructor(
     private router: Router,
     private itemService: ItemService,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    private route: ActivatedRoute
   ) { }
 
   async ionViewWillEnter(){
@@ -43,6 +44,18 @@ export class MyIdeasPage implements OnInit {
   }
 
   ngOnInit() {
+    this.route.params.subscribe(
+      param => {
+        if(param.delete == 1)
+          this.ionViewWillEnter();
+      });
+  }
+
+  async doRefresh(event){
+    var self = this;
+    var db = firebase.firestore();
+    await self.ionViewWillEnter();
+    event.target.complete();
   }
 
   goToThread(object){

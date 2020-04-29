@@ -1,14 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Edit</ion-title>
+    <div class="ion-text-center"><h2>Edit</h2></div>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <br>
-    <br>
     <div style="margin-left: 23px;" class="ion-text-center"><h5>{{thread.title}}</h5></div>
     <ion-buttons slot="end">
-      <ion-button >DELETE</ion-button>
+      <ion-button (click)="delete()">DELETE</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

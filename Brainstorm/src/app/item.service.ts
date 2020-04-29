@@ -30,18 +30,23 @@ export class ItemService {
 
   constructor() { }
 
-  async generateThread(value){
+  async generateThread(value, uploadPath){
     var self = this;
     var db = firebase.firestore();
+    var uploadedImgs = [];
+    if(uploadPath != '')
+      uploadedImgs.push(uploadPath);
     await db.collection('ideas').add({
       "title": value.title,
       "description": value.description,
       "category": value.category,
       "uid": self.currentUser.uid,
+      "date": Date.now(),
       "imgs": [value.img],
       "owner": self.currentUser.handle,
       "replies": [],
       "likedBy": [],
+      "uploadedImgs": uploadedImgs,
       "likes": 0.0,
       "dislikes": 0.0
     }).then(function(docref) {
@@ -73,6 +78,32 @@ export class ItemService {
         self.currentUser = doc.data();
       });
     });
+  }
+
+  async deleteIdea(value){
+    var self = this;
+    var imgRef;
+    var uploadedImgs = [];
+    var replies = [];
+    var db = firebase.firestore().collection('ideas');
+    await db.doc(value.docID).get().then(doc => {
+      uploadedImgs = doc.data().uploadedImgs;
+      replies = doc.data().replies;
+    })
+    await db.doc(value.docID).delete();
+    for(let i=0;i<uploadedImgs.length;i++)
+    {
+      imgRef = await firebase.storage().ref().child(uploadedImgs[i]);
+      await imgRef.delete().then(function(){
+        console.log('img deleted from storage');
+      }).catch(function(error){
+        console.log('error deleting img from storage');
+      });
+    }
+    for(let i=0;i<replies.length;i++)
+    {
+      await firebase.firestore().collection('replies').doc(replies[i]).delete();
+    }
   }
   
   async startConversation(otherUID:any){
