@@ -19,28 +19,30 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-card>
-    <h3>{{threadDescription}}</h3>
-    <br>
-    <!-- <ion-note>{{thread.owner}}</ion-note> -->
-    <h4>{{thread.owner}}</h4>
-	<ion-button (click)="message(thread)">
-			  <ion-icon name="mail-outline" ></ion-icon>
-	</ion-button>
-    <div>
-      <ion-img *ngFor='let img of imgs' [src]="img"></ion-img>
-    </div>
-    <div [hidden]="!isLikable()">
-      <h5><a (click)="like()">Like</a>{{ likes }}
-      <a (click)="dislike()"> Dislike</a>{{ dislikes }}</h5>
-    </div>
-    <div [hidden]="isLikable()">
-      <h5>Likes{{ likes }} Dislikes{{ dislikes }}</h5>
-    </div>
+    <ion-card-content>
+      <h2>{{threadDescription}}</h2>
+      <br>
+      <ion-note>{{thread.owner}}</ion-note>
+      <h5>Posted on {{thread.date | date: 'MM/dd/yyyy HH:mm'}}</h5>
+      <ion-button (click)="message(thread)">
+            <ion-icon name="mail-outline" ></ion-icon>
+      </ion-button>
+      <div>
+        <ion-img *ngFor='let img of imgs' [src]="img"></ion-img>
+      </div>
+      <div [hidden]="!isLikable()">
+        <h5><a (click)="like()">Like</a>{{ likes }}
+        <a (click)="dislike()"> Dislike</a>{{ dislikes }}</h5>
+      </div>
+      <div [hidden]="isLikable()">
+        <h5>Likes{{ likes }} Dislikes{{ dislikes }}</h5>
+      </div>
+    </ion-card-content>
   </ion-card>
   <ion-card *ngFor='let reply of replies'>
     <ion-card-content>
       <ion-text>
-        <h2>{{reply.body}}</h2>
+        {{reply.body}}
       </ion-text>
     </ion-card-content>
       <ion-item lines="none">

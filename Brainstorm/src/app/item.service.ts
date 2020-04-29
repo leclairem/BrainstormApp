@@ -58,7 +58,7 @@ export class ItemService {
       snapshot.forEach(doc => {
         var idea = doc.data();
         ideas.push({title:idea.title,description:idea.description,
-          uid:idea.uid,imgs:idea.imgs,docID:idea.docID,thumb:idea.imgs[0],
+          uid:idea.uid,date:idea.date,imgs:idea.imgs,docID:idea.docID,thumb:idea.imgs[0],
           owner:idea.owner,replies:idea.replies,likes:idea.likes,dislikes:idea.dislikes});
       });
     });
