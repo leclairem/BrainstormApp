@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import * as firebase from 'firebase';
 import { File } from '@ionic-native/file/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-edit-idea',
@@ -15,11 +16,12 @@ export class EditIdeaPage implements OnInit {
 
   thread:any;
   editForm: FormGroup;
-  cameraImg:string;
+  cameraImg='/assets/1.png';
   imgURL = '';
   imgPath = '';
   thumbPath = '';
-  imgs = []
+  imgs = [];
+  picName = '';
 
   constructor(
     private itemService: ItemService,
@@ -28,6 +30,7 @@ export class EditIdeaPage implements OnInit {
     private formBuilder: FormBuilder,
     private camera: Camera,
     private file: File,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -40,27 +43,41 @@ export class EditIdeaPage implements OnInit {
       })
   }
 
-  saveChanges(value){
+  async saveChanges(value){
     var self = this;
     var db = firebase.firestore();
     self.imgs = [];
-    db.collection('ideas').doc(self.thread.docID).update({
+    await db.collection('ideas').doc(self.thread.docID).update({
       'description': value.description
     });
+    self.presentAlert('Success','Changes have been saved');
+  }
+
+  async presentAlert(header, message) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
   async uploadPic(){
     var self = this;
     var db = firebase.firestore();
+    var uploadedImgs=[];
     await this.pickImage();
     await db.collection('ideas').doc(self.thread.docID).get().then(doc => {
       self.imgs = doc.data().imgs;
+      uploadedImgs = doc.data().uploadedImgs;
     });
     
     self.imgs.push(self.imgURL);
+    uploadedImgs.push(self.imgPath);
     
     await db.collection('ideas').doc(self.thread.docID).update({
-      'imgs': self.imgs
+      'imgs': self.imgs,
+      'uploadedImgs': uploadedImgs
     });
   }
 
@@ -128,7 +145,7 @@ export class EditIdeaPage implements OnInit {
     console.log("uploadToFirebase");
     return new Promise((resolve, reject) => {
       let imageid = (Math.floor(Math.random() * 2000)).toString();
-      let filename = "Brainstorm_"+imageid
+      let filename = "Brainstorm_"+imageid;
       // filename = _imageBlobInfo.fileName;
       let fileRef = firebase.storage().ref("images/" + filename);
       this.imgPath = ("images/" + filename);
@@ -162,5 +179,35 @@ export class EditIdeaPage implements OnInit {
         }
       );
     });
+  }
+
+  async delete(){
+    await this.deleteAlertConfirm();
+  }
+
+  async deleteAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: 'Are you sure you would like to <strong>delete</strong> this idea?\nThis cannot be undone',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Delete Canceled');
+          }
+        }, {
+          text: 'Delete',
+          handler: () => {
+            this.itemService.deleteIdea(this.thread);
+            let obj = {'delete': Number(1)};
+            this.router.navigate(['/thread',obj]);
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }
