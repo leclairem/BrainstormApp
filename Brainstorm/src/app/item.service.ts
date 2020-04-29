@@ -19,6 +19,7 @@ export class ItemService {
   userDocID: any;
 
   private itemSubject = new Subject<any>();
+	exist: boolean;
 
   publishData(data:any){
     this.itemSubject.next(data);
