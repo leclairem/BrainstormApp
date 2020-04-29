@@ -19,7 +19,6 @@ export class ItemService {
   userDocID: any;
 
   private itemSubject = new Subject<any>();
-	exist: boolean;
 
   publishData(data:any){
     this.itemSubject.next(data);
@@ -85,13 +84,13 @@ export class ItemService {
 	  
 	  db.collection('message').where('id','==',`${id}`).get().then(snapshot => {
       snapshot.forEach(doc => {
-		  this.exist = true;
+		  exist = true;
 		  console.log(exist);
       });
     });
 	db.collection('messages').where('id','==',`${this.currentUser.uid + otherUID}`).get().then(snapshot => {
       snapshot.forEach(doc => {
-		  this.exist = true;
+		  exist = true;
 		  console.log(exist);
       });
     });

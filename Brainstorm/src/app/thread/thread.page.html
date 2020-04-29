@@ -33,15 +33,17 @@
     </div>
   </ion-card>
   <ion-card *ngFor='let reply of replies'>
-    <ion-item>
-      <ion-label class='stacked'>
+    <ion-card-content>
+      <ion-text>
         <h2>{{reply.body}}</h2>
-        <ion-note>{{reply.owner}}</ion-note>
-      </ion-label>
-	  <ion-button (click)="message(reply)">
-			  <ion-icon name="mail-outline" ></ion-icon>
-	</ion-button>
-    </ion-item>
+      </ion-text>
+    </ion-card-content>
+      <ion-item lines="none">
+        <ion-note slot='end'>{{reply.owner}}</ion-note>
+        <ion-button slot='end' (click)="message(reply)">
+            <ion-icon name="mail-outline" ></ion-icon>
+        </ion-button>
+      </ion-item>
   </ion-card>
   <ion-item [hidden]="false">
     <form [formGroup]="replyForm" (submit)="postReply(replyForm.value)">

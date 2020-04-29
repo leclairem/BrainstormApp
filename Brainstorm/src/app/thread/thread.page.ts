@@ -24,6 +24,7 @@ export class ThreadPage implements OnInit {
   dislikes:number;
   thread:any;
   threadDescription: any;
+  likable:Boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -119,6 +120,21 @@ export class ThreadPage implements OnInit {
         self.dislikes = Number(newVal);
       })
     }
+  }
+
+  async hasLiked(){
+    var self = this;
+    var db = firebase.firestore().collection('ideas');
+    var likedBy = [];
+    await db.doc(self.thread.docID).get().then(doc => {
+      likedBy = doc.data().likedBy
+    });
+    for(let i=0;i<likedBy.length;i++)
+    {
+      if(likedBy[i] == self.itemService.currentUser.uid)
+        self.likable = true;
+    }
+    self.likable = false;
   }
 
   isOwner(): boolean {
