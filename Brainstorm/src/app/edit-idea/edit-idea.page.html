@@ -15,7 +15,7 @@
 
 <ion-content [fullscreen]="true" class="background">
 <form [formGroup]="editForm" (submit)="saveChanges(editForm.value)">
-  <ion-label><ion-text color="secondary"></ion-text>Edit Description</ion-text></ion-label>
+  <ion-label><ion-text color="secondary">Edit Description</ion-text></ion-label>
   <ion-item>
     <ion-textarea rows="10" formControlName="description" value={{thread.description}}></ion-textarea>
   </ion-item>
