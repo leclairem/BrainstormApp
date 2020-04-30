@@ -126,8 +126,9 @@ export class ItemService {
 		  console.log(exist);
       });
     }); */
-	//console.log(exist);
-	if(await this.checkConv(otherUID)){
+  //console.log(exist);
+  var check = await this.checkConv(otherUID
+	if(!check)){
 		  db.collection('messages').add({
 				id: id
 		  });
@@ -168,7 +169,7 @@ export class ItemService {
 			db.collection('users').doc(doc.id).update({'conversations':conversations}); 
 		  });
 		});
-	} 
+	  } 
   }
   
   checkConv(otherUID){
