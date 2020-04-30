@@ -127,8 +127,8 @@ export class ItemService {
       });
     }); */
   //console.log(exist);
-  var check = await this.checkConv(otherUID
-	if(!check)){
+  var check = await this.checkConv(otherUID);
+	if(!check){
 		  db.collection('messages').add({
 				id: id
 		  });
