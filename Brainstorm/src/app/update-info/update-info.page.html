@@ -1,13 +1,13 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar color="Primary">
+    <div class="ion-text-center"><ion-text color="secondary"><h2>Update Info</h2></ion-text></div>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="user-settings"></ion-back-button>
+      <ion-back-button color="secondary" defaultHref="user-settings"></ion-back-button>
     </ion-buttons>
-    <ion-title>Update Info</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="background">
   <form [formGroup]="updateInfo" (submit)="update(updateInfo.value)">
 
     <ion-item>

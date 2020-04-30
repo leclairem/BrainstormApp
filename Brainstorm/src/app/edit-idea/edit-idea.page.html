@@ -1,17 +1,18 @@
-<ion-header>
-  <ion-toolbar>
-    <div class="ion-text-center"><h2>Edit</h2></div>
+<ion-header [translucent]="true">
+  <ion-toolbar color="Primary">
+    <div class="ion-text-center"><ion-text color="secondary"><h2>Edit</h2></ion-text></div>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button color="secondary"></ion-back-button>
     </ion-buttons>
-    <div style="margin-left: 23px;" class="ion-text-center"><h5>{{thread.title}}</h5></div>
+    <div style="margin-left: 23px;" class="ion-text-center"><ion-text color="secondary">
+      <h5>{{thread.title}}</h5></ion-text></div>
     <ion-buttons slot="end">
       <ion-button (click)="delete()">DELETE</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="background">
 <form [formGroup]="editForm" (submit)="saveChanges(editForm.value)">
   <ion-label>Edit Description</ion-label>
   <ion-item>
