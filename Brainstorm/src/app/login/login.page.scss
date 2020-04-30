@@ -36,3 +36,7 @@ ion-content.background{
     --background: url(../../assets/bgimage.png) fixed center no-repeat;
     background-size: cover;
 }
+
+ion-header {
+  background-color: rgba(34, 36, 40, .8);
+}

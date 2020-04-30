@@ -1,5 +1,6 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="Primary">
+<!-- <ion-header [translucent]="true"> -->
+  <ion-header>
+    <ion-toolbar color="background-color">
     <div class="ion-text-center"><ion-text color="secondary"><h2>Edit</h2></ion-text></div>
     <ion-buttons slot="start">
       <ion-back-button color="secondary"></ion-back-button>
@@ -7,14 +8,14 @@
     <div style="margin-left: 23px;" class="ion-text-center"><ion-text color="secondary">
       <h5>{{thread.title}}</h5></ion-text></div>
     <ion-buttons slot="end">
-      <ion-button (click)="delete()">DELETE</ion-button>
+      <ion-button color="secondary" (click)="delete()">DELETE</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="background">
 <form [formGroup]="editForm" (submit)="saveChanges(editForm.value)">
-  <ion-label>Edit Description</ion-label>
+  <ion-label><ion-text color="secondary"></ion-text>Edit Description</ion-text></ion-label>
   <ion-item>
     <ion-textarea rows="10" formControlName="description" value={{thread.description}}></ion-textarea>
   </ion-item>

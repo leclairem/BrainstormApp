@@ -1,5 +1,6 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="Primary">
+<!-- <ion-header [translucent]="true"> -->
+  <ion-header>
+    <ion-toolbar color="background-color">
     <ion-buttons slot="start">
       <ion-back-button color="secondary"></ion-back-button>
     </ion-buttons>
@@ -7,7 +8,7 @@
       <h2>BrainStorm</h2><h3>{{thread.title}}</h3></ion-text></div>
     <img [hidden]="isOwner()" slot="end" src="/assets/2.png">
     <ion-buttons slot="end" [hidden]="!isOwner()">
-      <ion-button (click)="editIdea()">Edit</ion-button>
+      <ion-button color="secondary" (click)="editIdea()">Edit</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -25,9 +26,14 @@
       <ion-button (click)="message(thread)">
             <ion-icon name="mail-outline" ></ion-icon>
       </ion-button>
-      <div>
+      <!-- <div>
         <ion-img *ngFor='let img of imgs' [src]="img"></ion-img>
-      </div>
+      </div> -->
+      <ion-slides pager="true" slidesPerView="'auto'" spaceBetween="10">
+        <ion-slide *ngFor="let img of imgs">
+          <img src={{img}}>
+        </ion-slide>
+     </ion-slides>
       <div [hidden]="!isLikable()">
         <h5><a (click)="like()">Like</a>{{ likes }}
         <a (click)="dislike()"> Dislike</a>{{ dislikes }}</h5>
