@@ -1,13 +1,13 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>New Idea Thread</ion-title>
+<ion-header [translucent]="true">
+  <ion-toolbar color="Primary">
+    <div class="ion-text-center"><ion-text color="secondary"><h2>New Idea</h2></ion-text></div>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/my-ideas"></ion-back-button>
+      <ion-back-button color="secondary" defaultHref="/my-ideas"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="background">
   <form [formGroup]="newIdeaForm" (submit)="createIdea(newIdeaForm.value)">
     <ion-item>
       <ion-label color="primary" position="floating">Title</ion-label>

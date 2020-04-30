@@ -1,24 +1,23 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title><h2>My Ideas</h2></ion-title>
-    <ion-menu-button slot="start">
+<ion-header [translucent]="true">
+  <ion-toolbar color="Primary">
+    <div class="ion-text-center"><ion-text color="secondary"><h2>My Ideas</h2></ion-text></div>
+    <ion-menu-button color="secondary" slot="start">
     </ion-menu-button>
     <ion-buttons slot="end">
-      <ion-button (click)="create()">
-        <!-- <ion-text>New Idea</ion-text> -->
-        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+      <ion-button color="secondary" (click)="create()">
+        <ion-icon color="secondary" slot="icon-only" name="add-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="background">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-list>
-    <ion-item *ngFor="let idea of myIdeas" (click)="goToThread(idea)">
-      <ion-label>{{idea.title}}</ion-label>
+  <ion-list class="bg-transparent">
+    <ion-item color="dark" *ngFor="let idea of myIdeas" (click)="goToThread(idea)">
+      <ion-label color="secondary">{{idea.title}}</ion-label>
       <ion-thumbnail>
         <ion-img [src]="idea.thumb"></ion-img>
       </ion-thumbnail>

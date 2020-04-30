@@ -29,3 +29,8 @@
 ion-content ion-toolbar {
   --background: translucent;
 }
+
+ion-content.background{
+  --background: url(../../assets/bgimage.png) fixed center no-repeat;
+  background-size: cover;
+}

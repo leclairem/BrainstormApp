@@ -1,19 +1,20 @@
-<ion-header>
-  <ion-toolbar color="Primary">
-    <div class="ion-text-center"><h3>Messages</h3></div>
-	<ion-menu-button slot="start">
-		<ion-button slot="end"></ion-button>
-	</ion-menu-button>
-  </ion-toolbar>
-</ion-header>
+<ion-header [translucent]="true">
+	<ion-toolbar color="Primary">
+	  <div class="ion-text-center"><ion-text color="secondary"><h2>Conversations</h2></ion-text></div>
+	  <ion-menu-button color="secondary" slot="start">
+		  <ion-button slot="end"></ion-button>
+	  </ion-menu-button>
+	  <img slot="end" src="/assets/2.png">
+	</ion-toolbar>
+  </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="background">
 	<ion-list>
-		<ion-item *ngFor="let conv of conversations"
+		<ion-item color="dark" *ngFor="let conv of conversations"
 						[routerLink]="['/messages', conv]"
 						routerDirection="forward">
-			<ion-label *ngIf="conv.name1 == handle"> {{ conv.name2 }} </ion-label>
-			<ion-label *ngIf="conv.name2 == handle"> {{ conv.name1 }} </ion-label>
+			<ion-label *ngIf="conv.name1 == handle"> <ion-text color="secondary">{{ conv.name2 }}</ion-text></ion-label>
+			<ion-label *ngIf="conv.name2 == handle"> <ion-text color="secondary">{{ conv.name1 }}</ion-text></ion-label>
 		</ion-item>
 	</ion-list>
 </ion-content>
