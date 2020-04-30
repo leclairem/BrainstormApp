@@ -16,7 +16,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list class="bg-transparent">
-    <ion-item class="bg-transparent" *ngFor="let idea of myIdeas" (click)="goToThread(idea)">
+    <ion-item color="dark" *ngFor="let idea of myIdeas" (click)="goToThread(idea)">
       <ion-label color="secondary">{{idea.title}}</ion-label>
       <ion-thumbnail>
         <ion-img [src]="idea.thumb"></ion-img>

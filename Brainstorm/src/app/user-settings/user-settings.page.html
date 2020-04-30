@@ -2,55 +2,57 @@
   <ion-toolbar color="Primary">
     <div class="ion-text-center"><ion-text color="secondary"><h2>BrainStorm</h2>
       <h3>User Settings</h3></ion-text></div>
-<ion-menu-button color="secondary" slot="start">
-    <ion-button slot="end"></ion-button>
-</ion-menu-button>
-<img slot="end" src="/assets/2.png">
-</ion-toolbar>
+    <ion-menu-button color="secondary" slot="start">
+      <ion-button slot="end"></ion-button>
+    </ion-menu-button>
+    <img slot="end" src="/assets/2.png">
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="background">
-  <ion-item>
-    <ion-label>Email</ion-label>
+  <ion-item color="dark">
+    <ion-label><ion-text color="secondary">Email</ion-text></ion-label>
     <div>
-      <ion-label>{{email}}</ion-label>
+      <ion-label><ion-text color="secondary">{{email}}</ion-text></ion-label>
     </div>
   </ion-item>
-  <ion-item>
-    <ion-label>First Name</ion-label>
+  <ion-item color="dark">
+    <ion-label><ion-text color="secondary">First Name</ion-text></ion-label>
     <div>
-      <ion-label>{{firstName}}</ion-label>
+      <ion-label><ion-text color="secondary">{{firstName}}</ion-text></ion-label>
     </div>
   </ion-item>
-  <ion-item>
-    <ion-label>Last Name</ion-label>
+  <ion-item color="dark">
+    <ion-label><ion-text color="secondary">Last Name</ion-text></ion-label>
     <div>
-      <ion-label>{{lastName}}</ion-label>
+      <ion-label><ion-text color="secondary">{{lastName}}</ion-text></ion-label>
     </div>
   </ion-item>
-  <ion-item>
-    <ion-label>Handle</ion-label>
+  <ion-item color="dark">
+    <ion-label><ion-text color="secondary">Handle</ion-text></ion-label>
     <div>
-      <ion-label>{{handle}}</ion-label>
+      <ion-label><ion-text color="secondary">{{handle}}</ion-text></ion-label>
     </div>
   </ion-item>
-  <ion-item-divider>Account</ion-item-divider>
+  <ion-item-divider color="medium">
+    <ion-text color="primary">Account Settings</ion-text>
+  </ion-item-divider>
 
-  <ion-item (click)="goToChangePassword()" detail>
+  <ion-item color="dark" (click)="goToChangePassword()" detail>
     <ion-label>
-      Change Password
+      <ion-text color="secondary">Change Password</ion-text>
     </ion-label>
   </ion-item>
 
-  <ion-item (click)="goToUpdateInfo()" detail>
+  <ion-item color="dark" (click)="goToUpdateInfo()" detail>
     <ion-label>
-      Update Info
+      <ion-text color="secondary">Update Info</ion-text>
     </ion-label>
   </ion-item>
 
-  <ion-item (click)="goToUpdateEmail()" detail>
+  <ion-item color="dark" (click)="goToUpdateEmail()" detail>
     <ion-label>
-      Update Email
+      <ion-text color="secondary">Update Email</ion-text>
     </ion-label>
   </ion-item>
 

@@ -1,17 +1,16 @@
-<ion-header>
-	<ion-toolbar>
-		<ion-buttons slot="start">
-			<ion-back-button></ion-back-button>
-		</ion-buttons>
-		<ion-title>
-			{{ other }}
-		</ion-title>
-	</ion-toolbar>
+<ion-header color="dark">
+  <ion-toolbar color="dark">
+    <div class="ion-text-center"><ion-text color="secondary"><h2>{{other}}</h2></ion-text></div>
+    <ion-buttons slot="start">
+      <ion-back-button color="secondary" defaultHref="user-settings"></ion-back-button>
+    </ion-buttons>
+    <img slot="end" src="/assets/2.png">
+  </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="background">
   <ion-list>
-    <ion-item *ngFor="let chat of chats" no-lines>
+    <ion-item *ngFor="let chat of chats" lines="none">
       <div class="chat-status" text-center *ngIf="chat.type==='join'||chat.type==='exit';else message">
         <span class="chat-date">{{chat.sendDate | date:'short'}}</span>
         <span class="chat-content-center">{{chat.message}}</span>
