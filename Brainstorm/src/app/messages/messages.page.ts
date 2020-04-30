@@ -68,6 +68,14 @@ export class MessagesPage implements OnInit {
 	this.message = "";
   }
 
+	deleteConversation(){
+		console.log("Conversation deleted");
+		this.itemService.deleteConv(this.conv.name1,this.conv.name2,this.docID);
+		this.nickname = "system";
+		this.message = "Other user has left.";
+		this.sendMessage();
+		this.router.navigate(['/conversations']);
+	}
 }
 
 export const snapshotToArray = snapshot => {
@@ -81,6 +89,8 @@ export const snapshotToArray = snapshot => {
 
     return returnArr;
 };
+
+
 
 /* <div class="chat-status" text-center >
         <span class="chat-date">{{chat.sendDate | date:'short'}}</span>

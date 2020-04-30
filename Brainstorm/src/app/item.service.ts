@@ -141,35 +141,79 @@ export class ItemService {
 		  var conversations = [];
 		   if(this.currentUser.hasOwnProperty('conversations')){
 				conversations = this.currentUser.conversations;
-		  }
+      }
+      var i=-1;
+      console.log(docID);
+      for(var c=0;c<this.currentUser.conversations.length;c++){
+        //console.log(this.currentUser.conversations[c]);
+        if(this.currentUser.conversations[c].docID === docID){
+          i = c;
+          //console.log(c);
+          //console.log(i);
+          break;
+        }
+      }
 		  //var conversations = this.currentUser.conversations; 
-		  //conversations.push({'docID':docID, 'name1':name1, 'name2':name2});
-		  var self = this;
-		  //db = firebase.firestore().collection('users');
-		db.collection('users').where('uid','==',`${otherUID}`).get().then(snapshot => {
-		  snapshot.forEach(doc => {
-			var temp = doc.data();
-			name2 = temp.handle;
-			var tempConv = [];
-			if(temp.hasOwnProperty('conversations')){
-				tempConv = temp.conversations;
-		  }
-			tempConv.push({'docID':docID, 'name1':name1, 'name2':name2});
-			//console.log(tempConv);
-			db.collection('users').doc(doc.id).update({'conversations':tempConv}); 
-		  });
-		});
-		//console.log("Between");
-		db.collection('users').where('uid','==',`${self.uid}`).get().then(snapshot => {
-		  snapshot.forEach(doc => {
-			//console.log(doc.id);
-			//var docID = doc.id;
-			conversations.push({'docID':docID, 'name1':name1, 'name2':name2});
-			//console.log(conversations);
-			db.collection('users').doc(doc.id).update({'conversations':conversations}); 
-		  });
-		});
+      //conversations.push({'docID':docID, 'name1':name1, 'name2':name2});
+      if(i == -1){
+        var self = this;
+        //db = firebase.firestore().collection('users');
+        db.collection('users').where('uid','==',`${otherUID}`).get().then(snapshot => {
+          snapshot.forEach(doc => {
+          var temp = doc.data();
+          name2 = temp.handle;
+          var tempConv = [];
+          if(temp.hasOwnProperty('conversations')){
+            tempConv = temp.conversations;
+          }
+          tempConv.push({'docID':docID, 'name1':name1, 'name2':name2});
+          //console.log(tempConv);
+          db.collection('users').doc(doc.id).update({'conversations':tempConv}); 
+          });
+        });
+        //console.log("Between");
+        db.collection('users').where('uid','==',`${self.uid}`).get().then(snapshot => {
+          snapshot.forEach(doc => {
+          //console.log(doc.id);
+          //var docID = doc.id;
+          conversations.push({'docID':docID, 'name1':name1, 'name2':name2});
+          //console.log(conversations);
+          db.collection('users').doc(doc.id).update({'conversations':conversations}); 
+          });
+        });
+      }
 	  } 
+  }
+
+  deleteConv(name1, name2, docID){
+     var i=-1;
+     console.log(docID);
+    for(var c=0;c<this.currentUser.conversations.length;c++){
+      console.log(this.currentUser.conversations[c]);
+      if(this.currentUser.conversations[c].docID === docID){
+        i = c;
+        console.log(c);
+        console.log(i);
+        break;
+      }
+    }
+	  //const index = this.currentUser.conversations.indexOf({name1, name2, docID}, 0);
+    var self = this;
+    console.log(i);
+    if (i > -1) {
+		   this.currentUser.conversations.splice(i, 1);
+			var db = firebase.firestore();
+				db.collection('users').where('uid','==',`${self.uid}`).get().then(snapshot => {
+				snapshot.forEach(doc => {
+				db.collection('users').doc(doc.id).update({'conversations':this.currentUser.conversations}); 
+				});
+      });
+      this.Update();
+		}
+  }
+
+  async Update(){
+    await this.getUserData();
   }
   
   checkConv(otherUID){
